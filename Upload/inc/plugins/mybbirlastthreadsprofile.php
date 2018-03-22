@@ -3,13 +3,13 @@
  * MyBB: Last User's Threads in Profile
  *
  * File: mybbirlastthreadsprofile.php
- * 
+ *
  * Authors: AliReza_Tofighi & updated by Vintagedaddyo
  *
  * MyBB Version: 1.8
  *
  * Plugin Version: 1.2
- * 
+ *
  */
 
 // Disallow direct access to this file for security reasons
@@ -27,9 +27,9 @@ function mybbirlastthreadsprofile_info()
     global $lang;
 
     $lang->load("mybbirlastthreadsprofile");
-    
+
     $lang->mybbirlastthreadsprofile_Desc = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="float:right;">' .
-        '<input type="hidden" name="cmd" value="_s-xclick">' . 
+        '<input type="hidden" name="cmd" value="_s-xclick">' .
         '<input type="hidden" name="hosted_button_id" value="AZE6ZNZPBPVUL">' .
         '<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">' .
         '<img alt="" border="0" src="https://www.paypalobjects.com/pl_PL/i/scr/pixel.gif" width="1" height="1">' .
@@ -51,7 +51,7 @@ function mybbirlastthreadsprofile_activate(){
 	global $mybb, $db;
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("member_profile", "#".preg_quote('{$mybbirlastthreadsprofile}')."#i", '', 0);
-	find_replace_templatesets("member_profile", "#".preg_quote('{$signature}')."#i", '{$mybbirlastthreadsprofile}{$signature}');	
+	find_replace_templatesets("member_profile", "#".preg_quote('{$signature}')."#i", '{$mybbirlastthreadsprofile}{$signature}');
 }
 
 function mybbirlastthreadsprofile_deactivate(){
@@ -66,7 +66,7 @@ function mybbirlastthreadsprofile()
 	global $db, $mybb, $memprofile, $theme, $lang, $mybbirlastthreadsprofile;
 
     $lang->load("mybbirlastthreadsprofile");
-    
+
 	$threadlimit = 10;
 	$query = $db->query("
 		SELECT t.*, t.subject AS threadsubject, u.username, u.usergroup, u.displaygroup, i.*, i.name AS iconname,
@@ -91,6 +91,8 @@ function mybbirlastthreadsprofile()
 		{
 			$icon = "&nbsp;";
 		}
+
+        $threads['threadsubject'] = htmlspecialchars_uni($threads['threadsubject']);
 
 		if(strlen($threads['threadsubject']) > "40")
 		{
